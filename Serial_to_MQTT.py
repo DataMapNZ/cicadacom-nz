@@ -16,6 +16,21 @@ def main():
     MQTT_PASSWORD = ""
     MQTT_CLIENT_ID = ""
 
+    channels = {
+        "A": {"chan_num": 1, "devisor": 10},
+        "B": {"chan_num": 1, "devisor": 10},
+        "C": {"chan_num": 1, "devisor": 100},
+        "D": {"chan_num": 1, "devisor": 1},
+        "E": {"chan_num": 1, "devisor": 1},
+        "F": {"chan_num": 1, "devisor": 1},
+        "G": {"chan_num": 1, "devisor": 1000},
+        "H": {"chan_num": 1, "devisor": 1},
+        "I": {"chan_num": 1, "devisor": 1},
+        "J": {"chan_num": 1, "devisor": 1},
+        "K": {"chan_num": 1, "devisor": 1},
+        "L": {"chan_num": 1, "devisor": 1000}
+    }
+
     # Other settings that seem to be embedded in Cayenne's libraries
     # MQTT_URL =    "mqtt.mydevices.com"
     # MQTT_PORT =   "1883"
@@ -62,65 +77,9 @@ def main():
             # Test Point print("rcv.split Data = : " + node + channel + data + cs)
             if cs == '0':
                 # if cs = Check Sum is good = 0 then do the following
-
-                if channel == 'A':
-                    data = float(data)/10
-                    client.virtualWrite(1, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'B':
-                    data = float(data)/10
-                    client.virtualWrite(2, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'C':
-                    data = float(data)/100
-                    client.virtualWrite(3, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'D':
-                    data = float(data)/1
-                    client.virtualWrite(4, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'E':
-                    data = float(data)/1
-                    client.virtualWrite(5, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'F':
-                    data = float(data)/1
-                    client.virtualWrite(6, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'G':
-                    data = float(data)/1000
-                    client.virtualWrite(7, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'H':
-                    data = float(data)/1
-                    client.virtualWrite(8, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'I':
-                    data = float(data)/1
-                    client.virtualWrite(9, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'J':
-                    data = float(data)/1
-                    client.virtualWrite(10, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'K':
-                    data = float(data)/1
-                    client.virtualWrite(11, data, "analog_sensor", "null")
-                    client.loop()
-
-                if channel == 'L':
-                    data = float(data)/1000
-                    client.virtualWrite(12, data, "analog_sensor", "null")
+                if channel in channels:
+                    data = float(data)/channels[channel]["devisor"]
+                    client.virtualWrite(channels[channel]["chan_num"], data, "analog_sensor", "null")
                     client.loop()
 
         except ValueError:
